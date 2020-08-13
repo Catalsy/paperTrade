@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'api',
+    'computedfields',
     'paperTrade',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,6 +84,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'paperTrade.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
