@@ -32,10 +32,18 @@ def buy(request):
     3. Update the amount of stocks the user holds
     """
     # Check if there are enough funds
+    user = User.objects.get(username=request.user)
+    data = request.data
+    tranTotal = data['price'] * data['quantity']
 
+    if user.funds > tranTotal:
+        user.funds = user.funds - tranTotal
+        user.save()
+    
+    else:
+        return HttpResponse(status=400)
 
     # Log transaction
-    data = request.data
     serializer = TransactionSerializer(data=data)
 
     if serializer.is_valid():
