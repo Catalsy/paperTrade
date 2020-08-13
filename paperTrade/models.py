@@ -5,8 +5,8 @@ from computedfields.models import ComputedFieldsModel, computed
 
 # Create your models here.
 class User(AbstractUser):
-    funds = models.IntegerField()
-    investing = models.IntegerField()
+    funds = models.IntegerField(default=100000)
+    investing = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.username}"
