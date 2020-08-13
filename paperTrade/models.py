@@ -15,6 +15,7 @@ class Transaction(ComputedFieldsModel):
     stock = models.CharField(max_length=16)
     quantity = models.IntegerField()
     price = models.IntegerField()
+    transactionType = models.CharField(max_length=16)
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="transactions")
 
@@ -28,4 +29,4 @@ class Transaction(ComputedFieldsModel):
     transaction.total -> output """
 
     def __str__(self):
-        return f"{stock} x{quantity} ${price}"
+        return f"{self.stock} x{self.quantity} ${self.price}"
