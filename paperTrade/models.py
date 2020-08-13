@@ -30,3 +30,12 @@ class Transaction(ComputedFieldsModel):
 
     def __str__(self):
         return f"{self.stock} x{self.quantity} ${self.price}"
+
+class Stock(models.Model):
+    symbol = models.CharField(max_length=16)
+    quantity = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="stocks")
+
+    def __str__(self):
+        return f"{self.symbol} {self.quantity} owned by {self.user}"
+
