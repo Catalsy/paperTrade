@@ -43,7 +43,7 @@ def buy(request):
         user.save()
     
     else:
-        return HttpResponse(status=400)
+        return Response({"error": "not enough funds"})
 
     # Log transaction
     serializer = TransactionSerializer(data=data)
@@ -53,13 +53,12 @@ def buy(request):
 
     # Update stock amount 
     symbol = data['stock']
-    stock = Stock.objects.get(user=request.user, symbol=symbol)
-
-    if stock:
+    try :
+        stock = Stock.objects.get(user=request.user, symbol=symbol)
         stock.quantity = stock.quantity + data['quantity']
         stock.save()
 
-    else:
+    except:
         stock = Stock(symbol=symbol, quantity=data['quantity'], user=request.user)
         stock.save()
 
@@ -81,17 +80,35 @@ def updateFunds(request, amount):
 def sell(request):
     """
     Selling has the following steps:
-    1. Increasing the user's funds
-    2. Logging the transaction
-    3. Update stock quantity
+    1. Check if the user has enough stocks and update
+    2. Increasing the user's funds
+    3. Logging the transaction
     """
-    # Increase funds
+
+    # Check if the user has enough stocks, if so, update quantity
+    data = request.data
+    try: 
+        stock = Stock.objects.get(symbol=data['stock'], user=request.user)
+        if stock.quantity >= data['quantity']:
+            stock.quantity = stock.quantity - data['quantity']
+            stock.save()
+    except:
+        return Response({"error": "not enough stocks"})
+
+    # Update funds
+    user = User.objects.get(username=request.user)
+    tranTotal = data['price'] * data['quantity']
+
+    user.funds = user.funds + tranTotal
+    user.save()
 
     # Log transaction
+    serializer = TransactionSerializer(data=data)
 
-    # Update stock quantity
+    if serializer.is_valid():
+        serializer.save()
 
-    pass
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def userDetails(request):
@@ -107,5 +124,5 @@ def extractUserData(request):
         "funds": user.funds,
         "investing": user.investing
     }
-    
+
     return details
