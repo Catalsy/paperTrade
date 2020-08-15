@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import TransactionSerializer, UserSerializer
+from .serializers import TransactionSerializer, UserSerializer, StockSerializer
 from paperTrade.models import User, Transaction, Stock
 from django.contrib.auth.decorators import login_required
 
@@ -11,9 +11,10 @@ def apiOverview(request):
     api_urls = {
         'Buy': 'buy/',
         'Sell': 'sell/',
+        'Stocks': 'stocks/',
         'Update Funds': 'update-funds/<int:amount>',
         'Transactions': 'transactions/', 
-        'User Details': 'user/' 
+        'User Details': 'user/'
     }
     return Response(api_urls)
 
@@ -110,9 +111,20 @@ def sell(request):
 
     return Response(serializer.data)
 
+@login_required
 @api_view(['GET'])
 def userDetails(request):
     return Response(extractUserData(request))
+
+@login_required
+@api_view(['GET'])
+def userStocks(request):
+    # Return stocks owned by the current user
+    user = User.objects.get(username=request.user)
+    stocks = Stock.objects.filter(user=user)
+    serializer = StockSerializer(stocks, many=True)
+
+    return Response(serializer.data)
 
 ######## HELPER METHODS ########
 
