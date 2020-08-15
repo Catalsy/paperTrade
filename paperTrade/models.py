@@ -9,7 +9,7 @@ class User(AbstractUser):
     investing = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.username}"
+        return f"{self.username} Funds: {self.funds}"
 
 class Transaction(ComputedFieldsModel):
     stock = models.CharField(max_length=16)

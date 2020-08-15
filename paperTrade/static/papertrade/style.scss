@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #000F39;
+
+    * {
+        color: white;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+input {
+    background-color: transparent;
+}
+nav {
+    font-weight: 500;
+
+    .money-icon {
+        background: url('../images/dollar.png') no-repeat;
+        height: 1.25rem;
+        width: auto;
+        display: block;
+    }
+
+    .navbar {
+        padding: 0rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+}
+
+.under-nav > *{
+    display: inline-block;
+    font-size: 0.9rem;
+
+    span {
+        font-weight: 700;
+    }
+}
+
+.balance {
+    i {
+        background: url('../images/edit.png') no-repeat;
+        height: 1.4rem;
+        width: auto;
+        display: block;
+    }
+}
+
+.latest-transactions {
+    button {
+        background: transparent;
+        border-color: white;
+    }
+}
+
+#search-section {
+    button {
+        background: transparent;
+    }
+
+    .chart {
+        display: none;
+    }
+}
