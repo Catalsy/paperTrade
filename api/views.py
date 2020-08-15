@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import TransactionSerializer, UserSerializer
 from paperTrade.models import User, Transaction, Stock
+from django.contrib.auth.decorators import login_required
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -23,7 +24,7 @@ def showTransactions(request):
     serializer = TransactionSerializer(transactions, many=True)
     return Response(serializer.data)
 
-
+@login_required
 @api_view(['POST'])
 def buy(request):
     """ 
@@ -64,13 +65,18 @@ def buy(request):
 
     return Response(serializer.data)
 
+@login_required
+@api_view(['GET'])
 def updateFunds(request, amount):
+    # Updates funds and returns a response with the updated user data
+
     user = User.objects.get(username=request.user)
     user.funds = amount
     user.save()
 
-    return HttpResponse(status=204)
+    return Response(extractUserData(request))
 
+@login_required
 @api_view(['POST'])
 def sell(request):
     """
@@ -89,4 +95,17 @@ def sell(request):
 
 @api_view(['GET'])
 def userDetails(request):
-    pass
+    return Response(extractUserData(request))
+
+######## HELPER METHODS ########
+
+def extractUserData(request):
+    # Return details of the current loged in user
+    user = User.objects.get(username=request.user)
+    details = {
+        "username": user.username,
+        "funds": user.funds,
+        "investing": user.investing
+    }
+    
+    return details
