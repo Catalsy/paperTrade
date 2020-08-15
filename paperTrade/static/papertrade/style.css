@@ -60,7 +60,7 @@ nav .navbar-brand {
   background: transparent;
 }
 
-#search-section .chart {
+#search-section .valid-search, #search-section .invalid-search {
   display: none;
 }
 /*# sourceMappingURL=style.css.map */

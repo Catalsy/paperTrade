@@ -73,35 +73,40 @@
     <div class="main">
         <section id="search-section" >
             <h4>Stock symbol:</h4>
-            <input id="search-input"type="text">
+            <input id="search-input" type="text">
             <button id="search-btn">Search</button>
-            <h1>XXXX</h1>
-            <input id="buy-input" type="number">
-            <button id="buy-btn">Buy</button>
-            <h3>Xxxxxx, xxxx.xxx</h3>
+            <div class="invalid-search">Invalid symbol</div>
+            <h1 id="symbol-heading" class="valid-search"></h1>
+            <input class="valid-search" id="buy-input" type="number">
+            <button class="valid-search" id="buy-btn">Buy</button>
+            <h3 id="company-heading" class="valid-search"></h3>
 
             <!-- TradingView Widget BEGIN -->
-            <div class="tradingview-widget-container chart">
+            <div class="tradingview-widget-container chart valid-search">
                 <div id="tradingview_d2e0d"></div>
-                <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/aaple/" rel="noopener" target="_blank"><span class="blue-text">AAPL Chart</span></a> by TradingView</div>
                 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                 <script type="text/javascript">
-                new TradingView.widget(
-                {
-                "width": 940,
-                "height": 430,
-                "symbol": "tsla",
-                "interval": "D",
-                "timezone": "Etc/UTC",
-                "theme": "dark",
-                "style": "3",
-                "locale": "en",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
-                "allow_symbol_change": true,
-                "container_id": "tradingview_d2e0d"
-                }
-                );
+                // change chart everytime a search is done
+                const symbolInput = document.querySelector('#search-input')
+                document.querySelector('#search-btn').addEventListener('click', () => {
+                    let symbol = symbolInput.value;
+                    new TradingView.widget(
+                    {
+                    "width": 940,
+                    "height": 430,
+                    "symbol": `${symbol}`,
+                    "interval": "D",
+                    "timezone": "Etc/UTC",
+                    "theme": "dark",
+                    "style": "3",
+                    "locale": "en",
+                    "toolbar_bg": "#f1f3f6",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "container_id": "tradingview_d2e0d"
+                    }
+                    );
+                });
                 </script>
             </div>
             <!-- TradingView Widget END -->
