@@ -3,8 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.apiOverview, name='apiOverview'),
-    path('transactions/', views.showTransactions, name='showTransactions'),
     path('buy/', views.buy, name='buy'),
+    path('sell/', views.sell, name="sell"),
     path('update-funds/<int:amount>', views.updateFunds, name="updateFunds"),
+    path('transactions/', views.showTransactions, name='showTransactions')
+
 
 ]

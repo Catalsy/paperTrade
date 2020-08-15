@@ -8,10 +8,11 @@ from paperTrade.models import User, Transaction, Stock
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
-        'Buy': 'stock-buy/',
-        'Sell': 'stock-sell/',
-        'Update Funds': 'update-funds/',
-        'Transactions': 'transactions/'
+        'Buy': 'buy/',
+        'Sell': 'sell/',
+        'Update Funds': 'update-funds/<int:amount>',
+        'Transactions': 'transactions/', 
+        'User Details': 'user/' 
     }
     return Response(api_urls)
 
@@ -36,7 +37,7 @@ def buy(request):
     data = request.data
     tranTotal = data['price'] * data['quantity']
 
-    if user.funds > tranTotal:
+    if user.funds >= tranTotal:
         user.funds = user.funds - tranTotal
         user.save()
     
@@ -69,3 +70,23 @@ def updateFunds(request, amount):
     user.save()
 
     return HttpResponse(status=204)
+
+@api_view(['POST'])
+def sell(request):
+    """
+    Selling has the following steps:
+    1. Increasing the user's funds
+    2. Logging the transaction
+    3. Update stock quantity
+    """
+    # Increase funds
+
+    # Log transaction
+
+    # Update stock quantity
+
+    pass
+
+@api_view(['GET'])
+def userDetails(request):
+    pass
