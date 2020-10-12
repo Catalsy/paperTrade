@@ -70,8 +70,19 @@ def buy(request):
 def updateFunds(request, amount):
     # Updates funds and returns a response with the updated user data
 
-    user = User.objects.get(username=request.user)
+    user = request.user
     user.funds = amount
+    user.save()
+
+    return Response(extractUserData(request))
+
+@login_required
+@api_view(['GET'])
+def updateInvesting(request, amount):
+    # Updates investing and returns a response with the updated user data
+
+    user = request.user
+    user.investing = amount
     user.save()
 
     return Response(extractUserData(request))
@@ -120,7 +131,7 @@ def userDetails(request):
 @api_view(['GET'])
 def userStocks(request):
     # Return stocks owned by the current user
-    user = User.objects.get(username=request.user)
+    user = request.user
     stocks = Stock.objects.filter(user=user)
     serializer = StockSerializer(stocks, many=True)
 
@@ -130,7 +141,7 @@ def userStocks(request):
 
 def extractUserData(request):
     # Return details of the current loged in user
-    user = User.objects.get(username=request.user)
+    user = request.user
     details = {
         "username": user.username,
         "funds": user.funds,

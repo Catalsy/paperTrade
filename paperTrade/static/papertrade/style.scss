@@ -45,12 +45,23 @@ nav {
 }
 
 .balance {
-    i {
+
+    #edit {
+        cursor: pointer;
         background: url('../images/edit.png') no-repeat;
         height: 1.4rem;
         width: auto;
         display: block;
     }
+
+    #refresh {
+        cursor: pointer;
+        background: url('../images/refresh.png') no-repeat;
+        height: 1.4rem;
+        width: auto;
+        display: block;
+    }
+
 }
 
 .latest-transactions {

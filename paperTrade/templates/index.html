@@ -7,23 +7,23 @@
         <ul class="nav justify-content-end">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" id="search-link" href="#">Search</a>
+                    <a class="nav-link" id="search-link" href="">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="dashboard-link" href="#">Dashboard</a>
+                    <a class="nav-link" id="dashboard-link" href="">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="transactions-link" href="#">Transactions</a>
+                    <a class="nav-link" id="transactions-link" href="">Transactions</a>
                 </li>
             {% else %}
                 <li class="nav-item green-btn">
-                    <a class="nav-link" href="#">Try as Guest</a>
+                    <a class="nav-link" href="">Try as Guest</a>
                 </li>
                 <li class="nav-item green-btn">
-                    <a class="nav-link" href="#">Sign In</a>
+                    <a class="nav-link" href="">Sign In</a>
                 </li>
                 <li class="nav-item green-btn">
-                    <a class="nav-link" href="#">Sign Up</a>
+                    <a class="nav-link" href="">Sign Up</a>
                 </li>
             {% endif %}
         </ul>
@@ -42,12 +42,13 @@
         <h2>Balance</h2>
         <div class="first-row">
             <div>Funds:</div>
-            <i></i>
-            <div id="funds">$<span>{{ funds|intcomma }}</span></div>
+            <i id='edit'></i>
+            <div>$<span id='funds'>{{ funds|intcomma }}</span></div>
         </div>
         <div class="second-row">
             <div>Investing:</div>
-            <div id="investing">$<span>{{ investing|intcomma }}</span></div>
+            <i id='refresh'></i>
+            <div>$<span id='investing'></span></div>
         </div>
     </section>
 
